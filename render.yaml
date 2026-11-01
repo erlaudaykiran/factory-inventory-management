@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: factory-inventory-management
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    plan: starter
+    disk:
+      name: inventory-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: DATABASE_PATH
+        value: /var/data/inventory.db
+      - key: WORKBOOK_PATH
+        value: Inventory management.xlsx
+      - key: SECRET_KEY
+        generateValue: true
